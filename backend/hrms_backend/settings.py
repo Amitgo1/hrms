@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure--31($!h5^k9em+$0_lakc4=2hjy*80w(jlufvid)$3$e6zwqr%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["hrms-backend-production.up.railway.app"]
 
 
 # Application definition
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -66,15 +67,9 @@ WSGI_APPLICATION = 'hrms_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hrms_db',
-        'USER': 'postgres',
-        'PASSWORD': 'Amitgo@1',
-        'HOST': 'localhost',
-        'PORT': '5433',
-    }
+    "default": dj_database_url.config(conn_max_age=600)
 }
 
 
