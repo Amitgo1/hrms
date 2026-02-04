@@ -63,6 +63,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hrms_backend.wsgi.application'
 
+APPEND_SLASH = True
+
+
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
