@@ -1,26 +1,48 @@
-from rest_framework import viewsets, status
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Employee, Attendance
-from .serializers import EmployeeSerializer, AttendanceSerializer
+from rest_framework import status
+from django.db import IntegrityError
+from .models import *
+from .serializers import *
 
-class EmployeeViewSet(viewsets.ModelViewSet):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
+@api_view(['GET', 'POST'])
+def employee_list_create(request):
+    if request.method == 'GET':
+        employees = Employee.objects.all()
+        serializer = EmployeeSerializer(employees, many=True)
+        return Response(serializer.data)
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            self.perform_create(serializer)
-        except IntegrityError as e:
-            return Response(
-                {"error": "Employee ID or email already exists."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    elif request.method == 'POST':
+        serializer = EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+            except IntegrityError:
+                return Response(
+                    {"error": "Employee ID or Email already exists."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 
-class AttendanceViewSet(viewsets.ModelViewSet):
-    queryset = Attendance.objects.all()
-    serializer_class = AttendanceSerializer
+@api_view(['GET', 'POST'])
+def attendance_list_create(request):
+    if request.method == 'GET':
+        attendances = Attendance.objects.all()
+        serializer = AttendanceSerializer(attendances, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = AttendanceSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+            except IntegrityError:
+                return Response(
+                    {"error": "Attendance for this employee on this date already exists."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

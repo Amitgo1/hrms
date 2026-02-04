@@ -1,8 +1,8 @@
-from rest_framework.routers import DefaultRouter
-from .views import EmployeeViewSet, AttendanceViewSet
+# urls.py
+from django.urls import path
+from .views import employee_list_create, attendance_list_create
 
-router = DefaultRouter()
-router.register('employees', EmployeeViewSet)
-router.register('attendance', AttendanceViewSet)
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('employees/', employee_list_create, name='employee-list-create'),
+    path('attendance/', attendance_list_create, name='attendance-list-create'),
+]
