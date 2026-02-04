@@ -4,26 +4,13 @@ from rest_framework import status
 from django.db import IntegrityError
 from .models import *
 from .serializers import *
+from rest_framework.views import APIView
 
-@api_view(['GET', 'POST'])
-def employee_list_create(request):
-    if request.method == 'GET':
+class EmployeeList(APIView):
+    def get(self, request):
         employees = Employee.objects.all()
         serializer = EmployeeSerializer(employees, many=True)
         return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = EmployeeSerializer(data=request.data)
-        if serializer.is_valid():
-            try:
-                serializer.save()
-            except IntegrityError:
-                return Response(
-                    {"error": "Employee ID or Email already exists."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 
