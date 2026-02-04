@@ -57,14 +57,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hrms.wsgi.application'
 
-# Database (Render/PostgreSQL)
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=True  # keep True for Render production
     )
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
