@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure--31($!h5^k9em+$0_lakc4=2hjy*80w(jlufvid)$3$e6zwqr%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["hrms-backend-production.up.railway.app"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
