@@ -1,15 +1,14 @@
 # hrms/settings.py
 import os
 from pathlib import Path
-from decouple import config
-import dj_database_url
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY', default='unsafe-secret-key')
-DEBUG = config('DEBUG', default=False, cast=bool)
+SECRET_KEY = "django-insecure-g9y3!mwt21@%kwx#cz3_fiei+9@*8h!d$8@5p%v!mlk+-@=rr@"
+DEBUG = False
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
+ALLOWED_HOSTS = ["*"]
 
 # Applications
 INSTALLED_APPS = [
@@ -57,13 +56,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hrms.wsgi.application'
 
+# SQLite configuration
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True  # keep True for Render production
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
 
 
 # Password validation
