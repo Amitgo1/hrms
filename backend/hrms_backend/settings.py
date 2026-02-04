@@ -70,17 +70,10 @@ APPEND_SLASH = True
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hrms_db',
-        'USER': 'postgres',
-        'PASSWORD': 'Amitgo@1',
-        'HOST': 'localhost',
-        'PORT': '5433',
-    }
+    "default": dj_database_url.config(conn_max_age=600)
 }
-
 
 
 
