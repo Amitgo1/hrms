@@ -1,1 +1,1 @@
-web: gunicorn hrms_backend.wsgi --log-file -
+gunicorn hrms_backend.wsgi --log-file -
