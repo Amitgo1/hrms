@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "buildCommand": "cd hrms_frontend && npm install && npm run build",
+  "buildCommand": "npm install && npm run build",
   "outputDirectory": "hrms_frontend/dist",
   "routes": [
     { "src": "/(.*)", "dest": "/index.html" }
