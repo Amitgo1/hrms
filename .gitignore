@@ -13,6 +13,7 @@ env/
 .idea/
 *.iml
 *.DS_Store
+db.sqlite3
 
 # =========================
 # React / Node
